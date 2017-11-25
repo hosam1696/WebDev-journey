@@ -1,55 +1,33 @@
-# Free Code Camp Certifications
----
+this branch is apllication for javascript book **javascript data structure and algorithms** 
+by *Michael McMillan*
 
-## (1) Front End Development Certification
+The Book Conents are
 
-* Basic Front End Development Projects
+* The Javascript Programming Environment and Model
 
-* JQuery
+* Arrays
 
-* Basic Javascript
+* Lists
 
-* Object Oriented and Functional Programming
+* Stacks
 
-* Basic Algorithm Scripts
+* Queues
 
-* JSON Api and Ajax
+* Linked Lists
 
-* Intermediate Front End Development Projects
+* Dictionaries
 
-* Intermediate Algorithm Scripting
+* Hashing
 
-* Advanced Algorithm Scripting
+* sets
 
-* Advanced Front End Development Projects
+* Binary trees and binary search trees
 
+* Graphs and Graph Algorithms
 
-## (2) Back End Development Certification
+* Sorting Algorithms
 
-* GIT
+* searching Algorithms
 
-* Nodejs and Express.js
-
-* MongoDB
-
-* API Projects
-
-* Dynamic Web Applications Projects
-
-
-## (3) Video Challlenges
-
-* Computer Basics
-
-* The Dom
-
-* Chrome Developer Tools
-
-
-# (4) Coding Interview Preparation
-
-* Coding Interview Training
-
-* Mock Interviews
-
+* Advanced Algorithms
 

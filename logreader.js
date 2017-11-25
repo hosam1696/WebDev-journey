@@ -25,12 +25,14 @@ function increaseVisitors() {
 */
 
 let fibo = (n) => {
-    let a = 1,
-        b = 0;
-    while (n > 0) {
+    let a = 0,
+        b = 1,
+        alt;
+    while (n > 1) {
+        alt = b;
+        a = a + alt;
         b = a;
-        a = a + b;
-        console.log(a);;
+        console.log(a);
         n--
     }
 };
