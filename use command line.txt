@@ -1,0 +1,17 @@
+_ to creat a new file in your directory 
+use (ch touch) /path/to/file
+
+after coding your program
+
+1:- make {name of the file without its format}
+2:- put (./) to represent to the file path to open/run it 
+
+'#!/bin/bash
+find . -type d | xargs chmod 711
+find . -name *.php | xargs chmod 640
+find . -name *.js | xargs chmod 644
+chmod 644 week7/index.html
+chmod 644 week7/css/*
+chmod 644 week7/img/*
+chmod 644 week7/fonts/*
+echo "\nPermissions changed\n"'
