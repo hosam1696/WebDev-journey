@@ -117,4 +117,5 @@ log(myList.append('hosam'))
 //myList.clear()
 log(myList.contains('hosam'),myList.dataStored, myList.length, myList.pos)
 myList.end();
-console.log(myList.getElement(), myList.currentPos())
+console.log(myList.getElement(), myList.currentPos());
+

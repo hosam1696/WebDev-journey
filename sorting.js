@@ -1,0 +1,7 @@
+/*
+
+Two of the most common operations performed on data structue stored in a computer are sorting and searhing
+
+
+
+*/
