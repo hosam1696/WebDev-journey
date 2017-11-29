@@ -11,10 +11,8 @@ td {
 
 table {
 	border-collapse: collapse;
-	position: absolute;
-	left: 50%;
-	margin-left: -155px;
-	top: 50px;
+    display: block;
+	margin: 30px auto;
 }
 
 table tr:first-child td {
@@ -47,5 +45,20 @@ table tr td:last-child {
   border-radius: 5px;
   color: white;
   font-size: 2em;
+}
+
+#start-btn {
+    display: block;
+    margin: 15px auto 25px;
+    padding: 10px;
+    background : #333333;
+    color: #eee;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+
+}
+
+#result {
+
 }
 

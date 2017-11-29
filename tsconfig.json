@@ -5,7 +5,8 @@
         "sourceMap": true,
         "lib": [
             "dom",
-            "es2015.promise"
+            "es2015.promise",
+            "dom.iterable"
         ],
         "outDir": "build"
     },

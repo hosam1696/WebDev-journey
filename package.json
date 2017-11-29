@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ts:watch" : "tsc --watch"
+    "ts:watch" : "tsc --watch",
+    "live" : "livreload . -p 9661"
   },
   "keywords": [],
   "author": "",
