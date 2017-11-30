@@ -1,110 +1,123 @@
-var cells = document.querySelectorAll('.cell');
-var winResult = document.querySelector('.endgame');
+const cells = Array.from(document.querySelectorAll('.cell'));
+const winResult = document.querySelector('.endgame');
 console.log(cells);
 var EWonState;
 (function (EWonState) {
     EWonState[EWonState["win"] = 0] = "win";
     EWonState[EWonState["lose"] = 1] = "lose";
 })(EWonState || (EWonState = {}));
+/*interface IPlayer {
+    status: EWonState,
+    name: string
+}*/
 var EplayerIndicator;
 (function (EplayerIndicator) {
     EplayerIndicator["human"] = "O";
     EplayerIndicator["cpu"] = "X";
 })(EplayerIndicator || (EplayerIndicator = {}));
-var TicGame = /** @class */ (function () {
-    function TicGame() {
+class TicGame {
+    constructor() {
         this.huPlayer = EplayerIndicator.human;
         this.aiPlayer = EplayerIndicator.cpu;
         this.currentPlayer = this.huPlayer;
-        this.winCompos = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 4, 8],
-            [2, 4, 6],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8]
-        ];
+        this.winCompos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
     }
-    TicGame.prototype.init = function () {
-        var _this = this;
+    init() {
         this.origBoard = Array.from(Array(9).keys());
         console.log('original board', this.origBoard);
         cells.forEach(this.reset);
-        cells.forEach(function (cell, idx, cells) {
-            cell.addEventListener('click', function (evt) {
-                var target = evt.target;
-                _this.turnClick(target, _this.currentPlayer, idx);
-                console.log("cell index " + idx);
-            }, false);
+        cells.forEach((cell, idx) => {
+            cell.addEventListener('click', this.turnClick(idx), false);
         });
-    };
-    TicGame.prototype.reset = function (cell, idx, cells) {
-        cell.innerHTML = '';
-        cell.style.removeProperty('background-color');
-    };
-    TicGame.prototype.turnClick = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        this.turn.apply(this, args);
-    };
-    TicGame.prototype.turn = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var target = args[0], curretPlayer = args[1], index = args[2];
-        this.origBoard[index] = curretPlayer;
-        target.innerHTML = curretPlayer;
-        var gameWon = this.checkWon(curretPlayer);
-        cells.forEach(function (cell) {
-            //cell.removeEventListener('click');
+    }
+    turnClick(idx) {
+        return (evt) => {
+            let target = evt.target;
+            if (typeof this.origBoard[idx] === 'number') {
+                this.turn(target, this.currentPlayer, idx);
+                //this.origBoard = String('H').repeat(9).split(); // Dev Only
+                setTimeout(() => {
+                    this.turn(document.getElementById(String(this.bestSpot())), EplayerIndicator.cpu, Number(this.bestSpot()));
+                });
+            }
+        };
+    }
+    turn(target, currentPlayer, index) {
+        //let [target, currentPlayer, index] = args;
+        this.origBoard[index] = currentPlayer;
+        target.innerHTML = currentPlayer;
+        console.log(this.origBoard);
+        let gameWon = this.checkWon(currentPlayer);
+        cells.forEach(cell => {
             cell.style.removeProperty('background-color');
         });
-        if (gameWon)
+        if (gameWon) {
             this.gameOver(gameWon);
-    };
-    TicGame.prototype.checkWon = function (player) {
-        var plays = this.origBoard.reduce(function (acc, a, b) {
+        }
+        else {
+            if (this.checkTie) {
+                this.showMsg('Tie!<br> Play another match');
+                setTimeout(() => {
+                    winResult.style.display = 'none';
+                }, 3000);
+            }
+        }
+    }
+    bestSpot() {
+        let emptySquares = (() => {
+            let empty = [], i = 0;
+            for (let index in this.origBoard) {
+                if (Number(this.origBoard[index]))
+                    empty[i++] = index;
+            }
+            return empty;
+        })();
+        return this.origBoard.find(s => typeof s === 'number');
+    }
+    reset(cell) {
+        cell.innerHTML = '';
+        cell.style.removeProperty('background-color');
+    }
+    checkWon(player) {
+        let plays = this.origBoard.reduce((acc, a, b) => {
             return (a === player) ? acc.concat(b) : acc;
         }, []);
-        var gameWon = null;
+        let gameWon = null;
         console.log('player plays', plays, this.winCompos.entries());
-        for (var _i = 0, _a = Array.from(this.winCompos.entries()); _i < _a.length; _i++) {
-            var _b = _a[_i], index = _b[0], win = _b[1];
-            if (win.every(function (elem) { return plays.indexOf(elem) > -1; })) {
-                gameWon = { index: index, player: player };
+        for (let [index, win] of Array.from(this.winCompos.entries())) {
+            if (win.every(elem => plays.indexOf(elem) > -1)) {
+                gameWon = { index, player };
                 break;
             }
         }
         console.log('game won object', gameWon);
         return gameWon;
-    };
-    TicGame.prototype.gameOver = function (gameinfo) {
-        var _this = this;
-        var index = gameinfo.index, player = gameinfo.player;
-        for (var _i = 0, _a = this.winCompos[index]; _i < _a.length; _i++) {
-            var idx = _a[_i];
-            document.getElementById(idx).style.backgroundColor = player === this.currentPlayer ? "#45ff9a" : '#ff4a7a';
+    }
+    gameOver(gameInfo) {
+        let { index, player } = gameInfo;
+        for (let idx of this.winCompos[index]) {
+            console.log('win compos indexes ', idx, document.getElementById(String(idx)).style.color = 'red');
+            document.getElementById(String(idx)).style.backgroundColor = (player == 'O') ? "#45ff9a" : '#ff4a7a';
         }
-        winResult.style.display = 'block';
-        winResult.innerText = EplayerIndicator['O'] + ' is the winner';
-        setTimeout(function () {
-            _this.init();
+        // for (let i in cells) cells[i].removeEventListener('click', this.turnClick(i), false);
+        this.showMsg(gameInfo.player + ' is the winner');
+        setTimeout(() => {
+            this.init();
             winResult.style.display = 'none';
-        }, 1000);
-    };
-    return TicGame;
-}());
-window.onload = function () {
-    var Tic = new TicGame();
+        }, 3000);
+    }
+    showMsg(msg) {
+        winResult.style.display = 'block';
+        winResult.innerHTML = msg;
+    }
+    get checkTie() {
+        return this.origBoard.every(elem => typeof elem === 'string');
+    }
+}
+window.onload = () => {
+    let Tic = new TicGame();
     Tic.init();
     document.getElementById('start-btn')
-        .addEventListener('click', function (evt) {
-        Tic.init();
-    }, false);
+        .addEventListener('click', Tic.init, false);
 };
 //# sourceMappingURL=index.js.map
