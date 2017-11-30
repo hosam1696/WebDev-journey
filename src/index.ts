@@ -1,9 +1,5 @@
-const cells: Array<HTMLElement|Element> = Array.from(document.querySelectorAll('.cell'));
-const winResult :any= document.querySelector('.endgame');
-
-
-console.log(cells);
-
+const cells: Array<HTMLElement | Element> = Array.from(document.querySelectorAll('.cell'));
+const winResult: any = document.querySelector('.endgame');
 
 enum EWonState {
     win, lose
@@ -23,9 +19,8 @@ interface IGameWon {
     player: string
 }
 
-
 class TicGame {
-    origBoard: Array<number|string>;
+    origBoard: Array<number | string>;
     huPlayer = EplayerIndicator.human;
     aiPlayer = EplayerIndicator.cpu;
     currentPlayer = this.huPlayer;
@@ -50,14 +45,10 @@ class TicGame {
                 this.turn(target, this.currentPlayer, idx);
                 //this.origBoard = String('H').repeat(9).split(); // Dev Only
 
-
-                    setTimeout(()=>{
-                        this.turn(document.getElementById(String(this.bestSpot())), EplayerIndicator.cpu, Number(this.bestSpot()));
-                    })
-
+                setTimeout(() => {
+                    this.turn(document.getElementById(String(this.bestSpot(EplayerIndicator.cpu))), EplayerIndicator.cpu, Number(this.bestSpot(EplayerIndicator.cpu)));
+                })
             }
-
-
 
         };
     }
@@ -73,7 +64,7 @@ class TicGame {
         });
         if (gameWon) {  // check if any player win
             this.gameOver(gameWon)
-        } else  {     // check if there is a Tie
+        } else {     // check if there is a Tie
             if (this.checkTie) {
                 this.showMsg('Tie!<br> Play another match');
                 setTimeout(() => {
@@ -85,16 +76,67 @@ class TicGame {
     }
 
 
-    bestSpot(){
-            let emptySquares = (()=>{
-                let empty = [], i = 0;
-                for (let index in this.origBoard) {
-                    if(Number(this.origBoard[index]))
-                        empty[i++] = index;
+    bestSpot(player) {
+
+        let newBoard = this.origBoard.slice();
+        let minMax = ((newBoard, player) => {
+            let bestMove;
+            let emptySquares = () => {
+                return newBoard.filter(s => !!Number(s))
+            };
+            let availableSquares = emptySquares();
+
+            if (this.checkWon(player)) {
+                return {score: -10}
+            } else if (availableSquares.length === 0) {
+                return {score: 0}
+            }
+
+            let moves = [];
+
+            for (let i = 0; i < availableSquares.length; i++) {
+                let move: any = {};
+
+                move.index = newBoard[availableSquares[i]];
+
+                newBoard[availableSquares[i]] = this.currentPlayer;
+
+                if (player == EplayerIndicator.cpu) {
+                    let result = minMax(newBoard, EplayerIndicator.human);
+                    move.score = result.score;
+                } else {
+                    let result = minMax(newBoard, EplayerIndicator.cpu);
+                    move.score = result.score;
+
                 }
-                return empty;
-            })();
-        return this.origBoard.find(s => typeof s === 'number');
+                newBoard[availableSquares[i]] = move.index;
+
+                moves.push(move);
+
+
+                if (player == EplayerIndicator.cpu) {
+                    let bestScore = -10000;
+                    for (let i = 0; i < moves.length; i++) {
+                        if (moves[i].score > bestScore) {
+                            bestScore = moves[i].score;
+                            bestMove = i;
+                        }
+                    }
+                } else {
+                    let bestScore = 10000;
+                    for (let i = 0; i < moves.length; i++) {
+                        if (moves[i].score < bestScore) {
+                            bestScore = moves[i];
+                            bestMove = i;
+                        }
+                    }
+                }
+            }
+
+            return moves[bestMove]
+        });
+        console.info('minMax result', minMax(newBoard, player));
+        return minMax(newBoard, player).index;
     }
 
     private reset(cell): void {
@@ -108,7 +150,7 @@ class TicGame {
         }, []);
         let gameWon = null;
 
-        console.log('player plays', plays, this.winCompos.entries());
+        //console.log('player plays', plays, this.winCompos.entries());
         for (let [index, win] of Array.from(this.winCompos.entries())) {
             if (win.every(elem => plays.indexOf(elem) > -1)) {
                 gameWon = {index, player};
@@ -122,10 +164,10 @@ class TicGame {
     private gameOver(gameInfo: IGameWon): void {
         let {index, player} = gameInfo;
         for (let idx of this.winCompos[index]) {
-            console.log('win compos indexes ', idx,document.getElementById(String(idx)).style.color = 'red');
+            console.log('win compos indexes ', idx, document.getElementById(String(idx)).style.color = 'red');
             document.getElementById(String(idx)).style.backgroundColor = (player == 'O') ? "#45ff9a" : '#ff4a7a';
         }
-       // for (let i in cells) cells[i].removeEventListener('click', this.turnClick(i), false);
+        // for (let i in cells) cells[i].removeEventListener('click', this.turnClick(i), false);
 
         this.showMsg(gameInfo.player + ' is the winner');
 
@@ -154,6 +196,4 @@ window.onload = () => {
     document.getElementById('start-btn')
         .addEventListener('click', Tic.init, false);
 };
-
-
 

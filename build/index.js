@@ -1,6 +1,5 @@
 const cells = Array.from(document.querySelectorAll('.cell'));
 const winResult = document.querySelector('.endgame');
-console.log(cells);
 var EWonState;
 (function (EWonState) {
     EWonState[EWonState["win"] = 0] = "win";
@@ -37,7 +36,7 @@ class TicGame {
                 this.turn(target, this.currentPlayer, idx);
                 //this.origBoard = String('H').repeat(9).split(); // Dev Only
                 setTimeout(() => {
-                    this.turn(document.getElementById(String(this.bestSpot())), EplayerIndicator.cpu, Number(this.bestSpot()));
+                    this.turn(document.getElementById(String(this.bestSpot(EplayerIndicator.cpu))), EplayerIndicator.cpu, Number(this.bestSpot(EplayerIndicator.cpu)));
                 });
             }
         };
@@ -63,16 +62,58 @@ class TicGame {
             }
         }
     }
-    bestSpot() {
-        let emptySquares = (() => {
-            let empty = [], i = 0;
-            for (let index in this.origBoard) {
-                if (Number(this.origBoard[index]))
-                    empty[i++] = index;
+    bestSpot(player) {
+        let newBoard = this.origBoard.slice();
+        let minMax = ((newBoard, player) => {
+            let bestMove;
+            let emptySquares = () => {
+                return newBoard.filter(s => !!Number(s));
+            };
+            let availableSquares = emptySquares();
+            if (this.checkWon(player)) {
+                return { score: -10 };
             }
-            return empty;
-        })();
-        return this.origBoard.find(s => typeof s === 'number');
+            else if (availableSquares.length === 0) {
+                return { score: 0 };
+            }
+            let moves = [];
+            for (let i = 0; i < availableSquares.length; i++) {
+                let move = {};
+                move.index = newBoard[availableSquares[i]];
+                newBoard[availableSquares[i]] = this.currentPlayer;
+                if (player == EplayerIndicator.cpu) {
+                    let result = minMax(newBoard, EplayerIndicator.human);
+                    move.score = result.score;
+                }
+                else {
+                    let result = minMax(newBoard, EplayerIndicator.cpu);
+                    move.score = result.score;
+                }
+                newBoard[availableSquares[i]] = move.index;
+                moves.push(move);
+                if (player == EplayerIndicator.cpu) {
+                    let bestScore = -10000;
+                    for (let i = 0; i < moves.length; i++) {
+                        if (moves[i].score > bestScore) {
+                            bestScore = moves[i].score;
+                            bestMove = i;
+                        }
+                    }
+                }
+                else {
+                    let bestScore = 10000;
+                    for (let i = 0; i < moves.length; i++) {
+                        if (moves[i].score < bestScore) {
+                            bestScore = moves[i];
+                            bestMove = i;
+                        }
+                    }
+                }
+            }
+            return moves[bestMove];
+        });
+        console.info('minMax result', minMax(newBoard, player));
+        return minMax(newBoard, player).index;
     }
     reset(cell) {
         cell.innerHTML = '';
@@ -83,7 +124,7 @@ class TicGame {
             return (a === player) ? acc.concat(b) : acc;
         }, []);
         let gameWon = null;
-        console.log('player plays', plays, this.winCompos.entries());
+        //console.log('player plays', plays, this.winCompos.entries());
         for (let [index, win] of Array.from(this.winCompos.entries())) {
             if (win.every(elem => plays.indexOf(elem) > -1)) {
                 gameWon = { index, player };

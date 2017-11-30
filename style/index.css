@@ -13,8 +13,12 @@ table {
 	border-collapse: collapse;
     display: block;
 	margin: 30px auto;
+    text-align: center;
 }
 
+table tbody {
+    display: inline-block;
+}
 table tr:first-child td {
 	border-top: 0;
 }
