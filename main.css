@@ -1,0 +1,114 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #ccc
+}
+
+#calculator {
+    width: 100vw;
+    height: 100vh;
+    background-color: #555;
+/ / padding: 10 px;
+}
+
+#calculator .calc-result {
+    display: block;
+    height: 30%;
+    background-color: #333;
+    color: #eee;
+}
+
+#calculator .calc-result p {
+    margin: 0;
+    padding: 0 6px
+}
+
+#calculator .calc-result .dis-answer {
+    display: flex;
+    align-items: center;
+    background-color: #444;
+    height: 60%;
+    font-size: 6rem;
+    color: #f2f2f2;
+    text-shadow: 1px 1px #222;
+
+}
+
+#calculator .calc-result .proc-answer {
+    background-color: #555;
+    height: 40%;
+    display: flex;
+    color: #999;
+    align-items: center;
+    font-size: 3rem;
+}
+
+.reset-btns {
+    display: flex;
+
+    height: calc(100% / 6);
+}
+
+#calculator .calc-result .proc-answer span {
+    font-weight: bold;
+    color: #2a82b7;
+}
+
+#calculator .calc-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 70%;
+}
+
+#calculator .calc-body button {
+    margin: 0;
+    border: none;
+    background-color: #222;
+    color: #ddd;
+    text-align: center;
+    font-size: 2rem;
+}
+
+#calculator .calc-body .num-btns {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    width: 70%;
+    height: 100%;
+    background-color: #cccccc;
+}
+
+#calculator .calc-body .num-btns button {
+    width: calc(100% / 3);
+}
+
+#calculator .calc-body .operators-btns {
+    display: flex;
+    flex-direction: column-reverse;
+
+    width: 30%;
+}
+
+#calculator .calc-body .operators-btns > * {
+    height: calc(100% / 6);
+    background-color: #333;
+}
+
+#calculator .calc-body .operators-btns > button:first-child {
+    background-color: forestgreen;
+}
+
+#calculator .calc-body .operators-btns button:last-child {
+    background-color: firebrick;
+}
+
+.reset-btns button {
+    margin: 0;
+    width: 50%;
+}
+
+.reset-btns button:first-child {
+    background-color: #e8bb00 !important;
+}

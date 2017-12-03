@@ -3,109 +3,7 @@
 <head>
     <meta charset="utf8">
     <title>Canvas P5js</title>
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-            font-family: sans-serif;
-            background-color: #ccc
-        }
-        #calculator {
-            width: 100vw;
-            height: 100vh;
-            background-color: #555;
-            //padding: 10px;
-        }
-        #calculator .calc-result {
-            display: block;
-            height: 30%;
-            background-color: #333;
-            color: #eee;
-        }
-        #calculator .calc-result p {
-            margin: 0;
-            padding : 0 6px
-        }
-        #calculator .calc-result .dis-answer {
-            display: flex;
-            align-items: center;
-            background-color: #444;
-            height: 60%;
-            font-size: 6rem;
-            color: #f2f2f2;
-            text-shadow: 1px 1px #222;
-
-        }
-
-
-        #calculator .calc-result .proc-answer {
-            background-color: #555;
-            height: 40%;
-            display: flex;
-            color: #999;
-            align-items: center;
-            font-size: 3rem;
-        }
-        .reset-btns {
-            display: flex;
-
-            height: calc(100% / 6);
-        }
-
-        #calculator .calc-result .proc-answer span {
-            font-weight: bold;
-            color: #2a82b7;
-        }
-        #calculator .calc-body {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            height: 70%;
-        }
-        #calculator .calc-body button {
-            margin: 0;
-            border: none;
-            background-color: #222;
-            color: #ddd;
-            text-align: center;
-            font-size: 2rem;
-        }
-        #calculator .calc-body .num-btns{
-            display: flex;
-
-            flex-wrap: wrap;
-            width: 70%;
-            height: 100%;
-            background-color: #cccccc;
-        }
-        #calculator .calc-body .num-btns button {
-            width: calc(100% / 3);
-        }
-        #calculator .calc-body .operators-btns{
-            display: flex;
-            flex-direction: column-reverse;
-
-            width: 30%;
-        }
-        #calculator .calc-body .operators-btns > *{
-            height: calc(100% / 6);
-            background-color: #333;
-        }
-        #calculator .calc-body .operators-btns > button:first-child {
-            background-color: forestgreen;
-        }
-        #calculator .calc-body .operators-btns button:last-child {
-            background-color: firebrick;
-        }
-
-        .reset-btns button{
-            margin: 0;
-            width: 50%;
-        }
-        .reset-btns button:first-child {
-            background-color: #e8bb00 !important;
-        }
-    </style>
+    <link rel="stylesheet" href="./main.css">
 </head>
 <body>
 
@@ -140,95 +38,12 @@
                 <button type="button" value="c"></button>
                 <button type="button" value="ce"></button>
             </div>
-
         </div>
-
     </div>
 </section>
 
 <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/p5.js"></script>-->
-
-<script>
-
-    window.onload = function () {
-
-        class Calculator {
-
-            constructor() {
-                /******  Selectors   ********/
-                this.btns = document.querySelectorAll('button');
-                this.displayDiv = document.querySelector('[data-res="dis"]');
-                this.processDiv = document.querySelector('[data-res="proc"]');
-                this.displayResult = 0;
-                this.processResult = '';
-                this.availableOperators = /[\+\-\*\/c]/g;
-                this.finishCalc = false;
-            }
-
-            init () {
-                this.btns.forEach(btn=>{
-                    btn.innerText = btn.value;
-                    btn.addEventListener('click', this.btnClick(), false)
-                });
-            }
-            btnClick(ev) {
-                return (ev)=>{
-                    let val = ev.target.value;
-                    this.disOnProcess(val, val =='=');
-                }
-            }
-
-            disOnResult(res) {
-                !res&&(res=0);
-                this.displayDiv.innerText = res;
-                this.displayResult = res;
-                this.finishCalc = true;
-            }
-
-
-            disOnProcess(proc, ps=false) {
-                const procResLen = this.processResult.length;
-
-                if (ps) {
-                    if (this.availableOperators.test(this.processResult[procResLen - 1]))
-                        this.processDiv.innerText= this.processResult = this.removeLatest(this.processResult);
-                    console.log(this.processResult);
-                    this.disOnResult(eval(this.processResult));
-                } else if (proc === 'c') {
-                    this.processDiv.innerText= this.processResult =this.removeLatest(this.processResult) ;
-                } else if (proc === 'ce'){
-                    this.reset();
-                }else {
-                    if (this.displayResult !== 0 && this.finishCalc) {
-                        this.processResult = String(Number(this.displayResult)).concat(proc);
-                    } else {
-                        this.processResult = String(this.processResult).concat(proc);
-                    }
-                    this.processDiv.innerText = this.processResult;
-                    this.finishCalc = false;
-                }
-                this.decorateResult();
-                return this.processResult;
-            }
-            reset() {
-                this.processResult = '';
-                this.processDiv.innerText = '';
-                this.finishCalc = false;
-            }
-            removeLatest(str) {
-                let end = str.length - 1;
-                return  end>0?str.substr(0, end):this.displayResult;
-            }
-
-            decorateResult() {
-                this.processDiv.innerHTML =  this.processResult.replace(this.availableOperators, '&nbsp;<span>$&</span>&nbsp;')
-            }
-        }
-
-        const Calc = new Calculator();
-
-        Calc.init()
-    }
-</script>
+    <script src="calc.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
