@@ -16,6 +16,18 @@ class Calculator {
             btn.innerText = btn.value;
             btn.addEventListener('click', this.btnClick(), false)
         });
+        document.addEventListener('keydown', ev=>{
+            let keyNum = Number(ev.key);
+            let key = ev.key;
+            if (keyNum|| this.availableOperators.test(key)||keyNum === 0) {
+                this.disOnProcess(key);
+            } else {
+                (key=== '='||key === 'Enter')&& this.disOnProcess(null, true)
+
+            }
+
+
+        }, false)
     }
 
     btnClick(ev) {
