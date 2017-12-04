@@ -2,14 +2,36 @@ body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
-    background-color: #ccc
+    background: linear-gradient(-45deg,#2196F3,#2196F3 50%,#b7f7f1 50%,#b4f0f7 50.2%,#118bf7 50.4%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh
 }
-
+*:focus {
+    box-shadow: none;
+    outline-color: transparent;
+    /*outline: none;*/
+}
 #calculator {
-    width: 100vw;
-    height: 100vh;
+    max-width: 300px;
+    max-height: 450px;
+    height: 450px;
     background-color: #555;
-/ / padding: 10 px;
+    /*/ / padding: 10 px;*/
+    position: relative;
+}
+#calculator:before {
+    position: absolute;
+    content: '';
+    top: -10%;
+    left: -3%;
+    z-index: -1;
+    width: 106%;
+    height: 115%;
+    background-color: #222;
+    border-radius: 5px;
+    box-shadow: 0 0  20px #111;
 }
 
 #calculator .calc-result {
@@ -17,11 +39,16 @@ body {
     height: 30%;
     background-color: #333;
     color: #eee;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
 }
 
 #calculator .calc-result p {
     margin: 0;
-    padding: 0 6px
+    padding: 0 6px;
+    word-wrap: normal;
+    letter-spacing: normal;
+
 }
 
 #calculator .calc-result .dis-answer {
@@ -29,10 +56,9 @@ body {
     align-items: center;
     background-color: #444;
     height: 60%;
-    font-size: 6rem;
+    font-size: 3.5rem !important;
     color: #f2f2f2;
     text-shadow: 1px 1px #222;
-
 }
 
 #calculator .calc-result .proc-answer {
@@ -41,18 +67,20 @@ body {
     display: flex;
     color: #999;
     align-items: center;
-    font-size: 3rem;
+    font-size: 1.5rem !important;
 }
 
 .reset-btns {
     display: flex;
-
+    justify-content: space-around;
+    padding: 5px 0;
     height: calc(100% / 6);
 }
 
 #calculator .calc-result .proc-answer span {
     font-weight: bold;
-    color: #2a82b7;
+    color: #fff;
+    padding: 0  2px
 }
 
 #calculator .calc-body {
@@ -60,8 +88,8 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     height: 70%;
+    background-color: #222;
 }
-
 #calculator .calc-body button {
     margin: 0;
     border: none;
@@ -70,14 +98,51 @@ body {
     text-align: center;
     font-size: 2rem;
 }
+#calculator .calc-body button {
+    margin: 0;
+    border: none;
+    /*background-color: #222;*/
+    color: #ddd;
+    text-align: center;
+    font-size: 2rem;
+    transition: background-color 0.3s ease-in;
+}
 
 #calculator .calc-body .num-btns {
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
     width: 70%;
-    height: 100%;
-    background-color: #cccccc;
+    /*height: 100%;*/
+    background-color: #222;
+}
+#calculator .calc-body .num-btns button {
+    position: relative;
+    z-index: 5;
+
+}
+#calculator .calc-body .num-btns button:active:after {
+    background-color: #34affa;
+    box-shadow: none;
+}
+#calculator .calc-body .num-btns button:after {
+    content: '';
+    position: absolute;
+    top: 13%;
+    left:11%;
+    border-radius: 50%;
+    background: #111;
+    display: block;
+    width:55px;
+    height: 55px;
+    /*transform:scale(0);*/
+    z-index: -1;
+    box-shadow: 2px 2px #090909;
+    transition: all 0.2s ease-in-out;
+    /*//background-color: #2196f3;*/
+}
+#calculator .calc-body .num-btns button:hover:after {
+    transform: scale(1);
 }
 
 #calculator .calc-body .num-btns button {
@@ -85,18 +150,27 @@ body {
 }
 
 #calculator .calc-body .operators-btns {
+    margin-top: 8px;
     display: flex;
     flex-direction: column-reverse;
-
     width: 30%;
 }
 
 #calculator .calc-body .operators-btns > * {
     height: calc(100% / 6);
+    /*background-color: #333;*/
+
+}
+
+#calculator .calc-body .operators-btns button {
+
+
 }
 
 #calculator .calc-body .operators-btns > button:first-child {
     background-color: forestgreen;
+    box-shadow: 2px 2px #222;
+    border-radius: 4px;
 }
 
 #calculator .calc-body .operators-btns button:last-child {
@@ -104,10 +178,16 @@ body {
 }
 
 .reset-btns button {
-    margin: 0;
-    width: 50%;
+    font-size: 22px !important;
+    /*margin: 0;*/
+    text-transform: uppercase;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left:1%;
 }
 
 .reset-btns button:first-child {
     background-color: #e8bb00 !important;
 }
+    

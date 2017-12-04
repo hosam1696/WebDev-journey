@@ -37,20 +37,29 @@ class Calculator {
         const procResLen = this.processResult.length;
 
         if (ps) {
-            if (this.availableOperators.test(this.processResult[procResLen - 1]))
+            if (this.lastopIsMatch)
                 this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
-            console.log(this.processResult);
             this.disOnResult(eval(this.processResult));
         } else if (proc === 'c') {
             this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
         } else if (proc === 'ce') {
             this.reset();
-        } else {
-            if (this.displayResult !== 0 && this.finishCalc) {
-                this.processResult = String(Number(this.displayResult)).concat(proc);
+        } else if (this.processResult === '' && this.finishCalc === false && this.numIsOperator(proc)) { // the first input is an operator
+            return false;
+        }
+        else {
+            if (this.lastopIsMatch && this.numIsOperator(proc)) { // last operator will override the current operator
+                this.processResult = this.processResult.substring(0, procResLen - 1).concat(proc);
+                this.processDiv.innerText = this.processResult;
+                this.decorateResult();
             } else {
-                this.processResult = String(this.processResult).concat(proc);
+                if (this.displayResult !== 0 && this.finishCalc) { // if user had done previous calculations
+                    this.processResult = String(Number(this.displayResult)).concat(proc);
+                } else {
+                    this.processResult = String(this.processResult).concat(proc);
+                }
             }
+
             this.processDiv.innerText = this.processResult;
             this.finishCalc = false;
         }
@@ -70,6 +79,14 @@ class Calculator {
     }
 
     decorateResult() {
-        this.processDiv.innerHTML = this.processResult.replace(this.availableOperators, '&nbsp;<span>$&</span>&nbsp;');
+        this.processDiv.innerHTML = this.processResult.replace(this.availableOperators, '<span>$&</span>');
+    }
+
+    get lastopIsMatch() {
+        return this.availableOperators.test(this.processResult[this.processResult.length - 1])
+    }
+
+    numIsOperator(num) {
+        return Boolean(num.match(this.availableOperators))
     }
 }
