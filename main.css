@@ -93,7 +93,6 @@ body {
 
 #calculator .calc-body .operators-btns > * {
     height: calc(100% / 6);
-    background-color: #333;
 }
 
 #calculator .calc-body .operators-btns > button:first-child {

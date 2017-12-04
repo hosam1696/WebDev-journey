@@ -4,6 +4,199 @@
     <meta charset="utf8">
     <title>Canvas P5js</title>
     <link rel="stylesheet" href="./main.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh
+        }
+        *:focus {
+            box-shadow: none;
+            outline-color: transparent;
+            /*outline: none;*/
+        }
+        #calculator {
+            max-width: 300px;
+            max-height: 450px;
+            background-color: #555;
+        /*/ / padding: 10 px;*/
+            position: relative;
+        }
+        #calculator:before {
+            position: absolute;
+            content: '';
+            top: -10%;
+            left: -3%;
+            z-index: -1;
+            width: 106%;
+            height: 115%;
+            background-color: #222;
+            border-radius: 5px;
+            box-shadow: 0 0  20px #111;
+        }
+
+        #calculator .calc-result {
+            display: block;
+            height: 30%;
+            background-color: #333;
+            color: #eee;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+        }
+
+        #calculator .calc-result p {
+            margin: 0;
+            padding: 0 6px;
+            word-wrap: normal;
+            letter-spacing: normal;
+
+        }
+
+        #calculator .calc-result .dis-answer {
+            display: flex;
+            align-items: center;
+            background-color: #444;
+            height: 60%;
+            font-size: 6rem;
+            color: #f2f2f2;
+            text-shadow: 1px 1px #222;
+
+        }
+
+        #calculator .calc-result .proc-answer {
+            background-color: #555;
+            height: 40%;
+            display: flex;
+            color: #999;
+            align-items: center;
+            font-size: 3rem;
+        }
+
+        .reset-btns {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px 0;
+            height: calc(100% / 6);
+        }
+
+        #calculator .calc-result .proc-answer span {
+            font-weight: bold;
+            color: #2a82b7;
+        }
+
+        #calculator .calc-body {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            height: 70%;
+            background-color: #222;
+        }
+        #calculator .calc-body button {
+            margin: 0;
+            border: none;
+            background-color: #222;
+            color: #ddd;
+            text-align: center;
+            font-size: 2rem;
+        }
+        #calculator .calc-body button {
+            margin: 0;
+            border: none;
+            /*background-color: #222;*/
+            color: #ddd;
+            text-align: center;
+            font-size: 2rem;
+            transition: background-color 0.3s ease-in;
+        }
+
+        #calculator .calc-body .num-btns {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap;
+            width: 70%;
+            height: 100%;
+            background-color: #222;
+        }
+        #calculator .calc-body .num-btns button {
+            position: relative;
+            z-index: 5;
+
+        }
+        #calculator .calc-body .num-btns button:active:after {
+            background-color: #2f9fe3;
+            box-shadow: none;
+        }
+        #calculator .calc-body .num-btns button:after {
+            content: '';
+            position: absolute;
+            top: 13%;
+            left:11%;
+            border-radius: 50%;
+            background: #111;
+            display: block;
+            width:55px;
+            height: 55px;
+            /*transform:scale(0);*/
+            z-index: -1;
+            box-shadow: 2px 2px #090909;
+            transition: all 0.2s ease-in-out;
+            /*//background-color: #2196f3;*/
+        }
+        #calculator .calc-body .num-btns button:hover:after {
+            transform: scale(1);
+        }
+
+        #calculator .calc-body .num-btns button {
+            width: calc(100% / 3);
+        }
+
+        #calculator .calc-body .operators-btns {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column-reverse;
+            width: 30%;
+        }
+
+        #calculator .calc-body .operators-btns > * {
+            height: calc(100% / 6);
+            /*background-color: #333;*/
+
+        }
+
+        #calculator .calc-body .operators-btns button {
+
+
+        }
+
+        #calculator .calc-body .operators-btns > button:first-child {
+            background-color: forestgreen;
+            box-shadow: 2px 2px #222;
+            border-radius: 4px;
+        }
+
+        #calculator .calc-body .operators-btns button:last-child {
+            background-color: firebrick;
+        }
+
+        .reset-btns button {
+            font-size: 22px !important;
+            /*margin: 0;*/
+            text-transform: uppercase;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left:1%;
+        }
+
+        .reset-btns button:first-child {
+            background-color: #e8bb00 !important;
+        }
+    </style>
 </head>
 <body>
 
