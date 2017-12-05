@@ -13,7 +13,7 @@ class Calculator {
 
     init() {
         this.btns.forEach(btn => {
-            btn.innerText = btn.value;
+            //btn.innerText = btn.value;
             btn.addEventListener('click', this.btnClick(), false)
         });
         document.addEventListener('keydown', ev=>{
@@ -56,6 +56,8 @@ class Calculator {
             this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
         } else if (proc === 'ce') {
             this.reset();
+        } else if (proc === '@') {
+            this.processDiv.innerText = this.processResult = this.displayResult;
         } else if (this.processResult === '' && this.finishCalc === false && this.numIsOperator(proc)) { // the first input is an operator
             return false;
         }

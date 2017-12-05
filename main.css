@@ -2,7 +2,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
-    background: linear-gradient(-45deg,#2196F3,#2196F3 50%,#b7f7f1 50%,#b4f0f7 50.2%,#118bf7 50.4%);
+    background: linear-gradient(-45deg,#2196F3,#2196F3 50%,#118bf7 50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,7 +107,9 @@ body {
     font-size: 2rem;
     transition: background-color 0.3s ease-in;
 }
-
+#calculator .calc-body button.ans {
+    font-size: 1rem
+}
 #calculator .calc-body .num-btns {
     display: flex;
     flex-direction: row-reverse;
