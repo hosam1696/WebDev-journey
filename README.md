@@ -1,5 +1,6 @@
-## my Projects on p.js
+## basic javascript calculator
 
-1: calaculator
+view the calculator on [`codepen`](https://codepen.io/hosamsam/pen/jaJQyE) :man:
+
 
 ![calc image](./calc.png)
