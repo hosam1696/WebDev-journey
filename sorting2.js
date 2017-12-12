@@ -1,0 +1,14 @@
+/*
+bubble sort 
+
+selection sort
+
+Insertion Sort
+
+shellsort 
+
+mergesort
+
+quick sort
+
+*/
