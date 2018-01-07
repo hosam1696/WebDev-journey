@@ -1,58 +1,78 @@
-# Free Code Camp 
+## [40 keys computer science concepts](http://carlcheo.com/compsci)
 
-*check repo branches*
+* Big O Notation
 
-![check branches](./branches.png)
+* Sorting Algorithms
 
-## (1) Front End Development Certification
+* Recursion
 
-* Basic Front End Development Projects
+* Big Data
 
-* JQuery
+* Data Structure
 
-* Basic Javascript
+## Artificial Intelligence
 
-* Object Oriented and Functional Programming
+* Greedy Algorithms
 
-* Basic Algorithm Scripts
+* Hill Climbing
 
-* JSON Api and Ajax
+* Simulated Annealing
 
-* Intermediate Front End Development Projects
+* Dynamic Programming
 
-* Intermediate Algorithm Scripting
+* Machine Learning
 
-* Advanced Algorithm Scripting
+* P vs NP Problem
 
-* Advanced Front End Development Projects
+## computer architecture and engineering
 
+* how do computers work?
 
-## (2) Back End Development Certification
+* Halting Problem
 
-* GIT
+## concurrency
 
-* Nodejs and Express.js
+* parallesim
 
-* MongoDB
+* race condition
 
-* API Projects
+* Mutual Exclustion(Mutex)
 
-* Dynamic Web Applications Projects
+* Binary semaphore
 
+* counting semaphore
 
-## (3) Video Challlenges
+* deadlock
 
-* Computer Basics
+## commputer security
 
-* The Dom
+* computer hacking
 
-* Chrome Developer Tools
+* Brute-force Attack
 
+* Social Engineering
 
-# (4) Coding Interview Preparation
+* Security Exploit
 
-* Coding Interview Training
+* Trojan Horse
 
-* Mock Interviews
+* Rootkit
 
+* Distributed Denial-of-service Attack (DDoS)
 
+* Cryptography
+
+* Symmetric cryptography
+
+* Asymmetric cryptography
+
+## Software Development Methodologies
+
+* Waterfall Development
+
+* Agile Development
+    * Scrum
+    * Extreme programming
+    * Kanban
+
+* Software Development In The Real World
