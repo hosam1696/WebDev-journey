@@ -82,9 +82,7 @@ class Calculator {
     }
 
     reset() {
-        this.processResult = '';
-        this.processDiv.innerText = '';
-        this.finishCalc = false;
+        [this.processResult, this.processDiv.innerText, this.finishCalc] = ['', '', false];
     }
 
     removeLatest(str) {
