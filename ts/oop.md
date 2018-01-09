@@ -50,3 +50,15 @@ The	feature	that	we	will	miss	the	most	when	developing	large-scale	web	applicati
 in *OOP* we can say that a calss can extends another class and implement one or more interfaces
 
 In	object-oriented	languages,	the	term	interface	is	often	used	to	define	an	abstract	type that	contains	no	data	or	code,	but	defines	behaviors	as	method	signatures.
+
+---
+
+### The	dependency	inversion	principle 
+
+**The	dependency	inversion	(DI)**	principle	states,	Depend	upon	abstractions.	Do	not	depend upon	concretions.	In	the	previous	section,	we	implemented	FavouritesController	and	we were	able	to	replace	an	implementation	of	PersistanceServiceInterface	with	another without	having	to	perform	any	additional	change	to	FavouritesController.	This	was	possible because	we	followed	the	DI	principle,	as	FavouritesController	has	a	dependency	upon PersistanceServiceInterface	(abstractions)	rather	than	LocalStoragePersitanceService	or CookiePersitanceService	(concretions).
+
+### Modules
+
+* `RequireJS:`	RequireJS	uses	a	syntax	known	as	asynchronous	module	definition	(AMD)
+* `Browserify:`	Browserify	uses	a	syntax	known	as	CommonJS. 
+* `SystemJS:`	SystemJS	is	a	universal	module	loader,	which	means	that	it	supports	all	the available	module	syntaxes	(ES6,	CommonJS,	AMD,	and	UMD).
