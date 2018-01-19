@@ -7,8 +7,10 @@ class Calculator {
         this.processDiv = document.querySelector('[data-res="proc"]');
         this.displayResult = 0;
         this.processResult = '';
-        this.availableOperators = /[\+\-\*\/c]/g;
+        this.availableOperators = /[\+x÷\-\*\/c]/g;
+        this.convermathOperators = /[x÷]/gi;
         this.finishCalc = false;
+        this.operatorsToReplace ={'x': '*','÷': '/'};
     }
 
     init() {
@@ -33,7 +35,7 @@ class Calculator {
     btnClick(ev) {
         return (ev) => {
             let val = ev.target.value;
-            this.disOnProcess(val, val == '=');
+            this.disOnProcess(val, val == '=', ev.target.textContent);
         }
     }
 
@@ -45,13 +47,14 @@ class Calculator {
     }
 
 
-    disOnProcess(proc, ps = false) {
+    disOnProcess(proc, ps = false, operatorText=null) {
         const procResLen = this.processResult.length;
 
         if (ps) {
             if (this.lastopIsMatch)
                 this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
-            this.disOnResult(eval(this.processResult));
+            this.processDiv.innerText = String(this.processResult).replace(this.convermathOperators, m=>this.operatorsToReplace[m]);
+            this.disOnResult(eval(this.processDiv.innerText));
         } else if (proc === 'c') {
             this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
         } else if (proc === 'ce') {
@@ -63,18 +66,19 @@ class Calculator {
         }
         else {
             if (this.lastopIsMatch && this.numIsOperator(proc)) { // last operator will override the current operator
-                this.processResult = this.processResult.substring(0, procResLen - 1).concat(proc);
+                this.processResult = this.processResult.substring(0, procResLen - 1).concat(operatorText ? operatorText : proc);
                 this.processDiv.innerText = this.processResult;
                 this.decorateResult();
             } else {
                 if (this.displayResult !== 0 && this.finishCalc) { // if user had done previous calculations
-                    this.processResult = String(Number(this.displayResult)).concat(proc);
+                    this.processResult = String(Number(this.displayResult)).concat(operatorText ? operatorText : proc);
                 } else {
-                    this.processResult = String(this.processResult).concat(proc);
+                    
+                    this.processResult = String(this.processResult).concat(operatorText ?operatorText:proc);
                 }
             }
 
-            this.processDiv.innerText = this.processResult;
+            this.processDiv.innerText = String(this.processResult).replace(this.convermathOperators, m => this.operatorsToReplace[m]);
             this.finishCalc = false;
         }
         this.decorateResult();
