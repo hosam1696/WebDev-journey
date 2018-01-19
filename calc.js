@@ -5,6 +5,7 @@ class Calculator {
         this.btns = document.querySelectorAll('button');
         this.displayDiv = document.querySelector('[data-res="dis"]');
         this.processDiv = document.querySelector('[data-res="proc"]');
+        this.logDiv = document.querySelector('#log');
         this.displayResult = 0;
         this.processResult = '';
         this.availableOperators = /[\+x÷\-\*\/c]/g;
@@ -41,9 +42,8 @@ class Calculator {
 
     disOnResult(res) {
         !res && (res = 0);
-        this.displayDiv.innerText = res;
-        this.displayResult = res;
-        this.finishCalc = true;
+        [this.displayDiv.innerText, this.displayResult, this.finishCalc] = [res, res, true];
+        this.displayLog()
     }
 
 
@@ -104,5 +104,16 @@ class Calculator {
 
     numIsOperator(num) {
         return Boolean(num.match(this.availableOperators))
+    }
+
+    displayLog() {
+        this.logDiv.innerHTML += `\
+        <div class="res-log">
+            <span>${this.processDiv.textContent} =</span>
+            <span>${eval(this.processDiv.innerText)}</span>
+        </div>
+        `;
+        if (this.logDiv.scrollHeight > 265)
+            this.logDiv.scrollTop = this.logDiv.scrollHeight
     }
 }

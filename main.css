@@ -17,6 +17,38 @@ body {
     outline-color: transparent;
     /*outline: none;*/
 }
+#log {
+ position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0,0,0,0.6);
+    color: #ccc;
+    padding: 6px;
+    /* border: 1px solid rgba(0,0,0,0.7); */
+    overflow-y: scroll;
+    box-shadow: 5px 5px 64px #171717;
+}
+#log > p {
+    margin: 0;
+    border-bottom: 1px solid rgba(245, 243, 243, 0.2);
+    padding: 0 5px;
+    margin-bottom: 5px;
+}
+#log .res-log {
+  border-bottom: 1px solid rgba(97, 95, 95, 0.2);
+  width: 75%;
+  padding: 3px 0;
+
+}
+#log .res-log:last-child {
+    border-bottom: none
+}
+#log .res-log span{
+  display: block;
+  letter-spacing: 2px
+}
 #calculator {
     max-width: 300px;
     max-height: 450px;
