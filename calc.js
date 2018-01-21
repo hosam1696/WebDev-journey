@@ -2,21 +2,21 @@ class Calculator {
 
     constructor() {
         /******  Selectors   ********/
-        this.btns = document.querySelectorAll('button');
+        this.btns = document.querySelectorAll('#calculator button');
         this.displayDiv = document.querySelector('[data-res="dis"]');
         this.processDiv = document.querySelector('[data-res="proc"]');
-        this.logDiv = document.querySelector('#log');
         this.displayResult = 0;
         this.processResult = '';
         this.availableOperators = /[\+x÷\-\*\/c]/g;
         this.convermathOperators = /[x÷]/gi;
         this.finishCalc = false;
-        this.operatorsToReplace ={'x': '*','÷': '/'};
+        this.operatorsToReplace = { 'x': '*', '÷': '/' };
+        this.calcLog = new Log();
+        this.logDiv = this.calcLog.selector;
     }
 
     init() {
         this.btns.forEach(btn => {
-            //btn.innerText = btn.value;
             btn.addEventListener('click', this.btnClick(), false)
         });
         document.addEventListener('keydown', ev=>{
@@ -28,12 +28,10 @@ class Calculator {
                 this.disOnProcess(key, false, key);
             } else if (isBackSpace) {
                 this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
-            }else {
+            } else {
                 (key=== '='||key === 'Enter')&& this.disOnProcess(null, true)
             }
-
-
-        }, false)
+        }, false);
     }
 
     btnClick(ev) {
@@ -110,12 +108,8 @@ class Calculator {
     }
 
     displayLog() {
-        this.logDiv.innerHTML += `\
-        <div class="res-log">
-            <span>${this.processDiv.textContent} =</span>
-            <span>${eval(this.processDiv.innerText)}</span>
-        </div>
-        `;
+        const [expression, result] = [this.processDiv.textContent, eval(this.processDiv.innerText)];        
+        this.calcLog.saveLog({ expression, result, date: Date.now() })
         if (this.logDiv.scrollHeight > 265)
             this.logDiv.scrollTop = this.logDiv.scrollHeight
     }

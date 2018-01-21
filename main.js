@@ -1,4 +1,4 @@
 window.onload = function () {
-    const Calc = new Calculator();
-    Calc.init();
+    const calc = new Calculator();
+    calc.init();
 };
