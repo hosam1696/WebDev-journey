@@ -12,7 +12,7 @@ class Calculator {
         this.finishCalc = false;
         this.operatorsToReplace = { 'x': '*', '÷': '/' };
         this.calcLog = new Log();
-        this.logDiv = this.calcLog.selector;
+        this.logDiv = this.calcLog.selector.parentNode;
     }
 
     init() {
