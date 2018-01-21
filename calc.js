@@ -20,13 +20,16 @@ class Calculator {
             btn.addEventListener('click', this.btnClick(), false)
         });
         document.addEventListener('keydown', ev=>{
-            let keyNum = Number(ev.key);
             let key = ev.key;
-            if (keyNum|| this.availableOperators.test(key)||keyNum === 0) {
+            let isBackSpace = ev.which == 8;
+            if (/\d+/.test(key)) {
                 this.disOnProcess(key);
-            } else {
+            } else if (this.availableOperators.test(key) && ev.which != 8) {
+                this.disOnProcess(key, false, key);
+            } else if (isBackSpace) {
+                this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
+            }else {
                 (key=== '='||key === 'Enter')&& this.disOnProcess(null, true)
-
             }
 
 
