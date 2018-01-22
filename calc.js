@@ -52,10 +52,13 @@ class Calculator {
         const procResLen = this.processResult.length;
 
         if (ps) {
-            if (this.lastopIsMatch)
+            if (this.lastopIsMatch) {
                 this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
+            }
             this.processDiv.innerText = String(this.processResult).replace(this.convermathOperators, m=>this.operatorsToReplace[m]);
-            this.disOnResult(eval(this.processDiv.innerText));
+            if (eval(this.processDiv.innerText) || eval(this.processDiv.innerText) ==0) {
+                this.disOnResult(eval(this.processDiv.innerText));
+            }
         } else if (proc === 'c') {
             this.processDiv.innerText = this.processResult = this.removeLatest(this.processResult);
         } else if (proc === 'ce') {
